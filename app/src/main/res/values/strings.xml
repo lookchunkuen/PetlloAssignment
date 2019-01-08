@@ -1,9 +1,23 @@
 <resources>
-    <string name="app_name">PetlloAssignment</string>
+    <!-- Login & Register -->
+    <string name="app_name">Petllo</string>
     <string name="username">Username</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="register">Register</string>
     <string name="login">Login</string>
+    <string name="btn_link_to_register">Not a member? Sign up now.</string>
+    <string name="btn_link_to_login">Already registered! Login here.</string>
+    <string name="logo">Petllo Logo</string>
+
+    <!-- Bottom Navigation View -->
+    <string name="home">Home</string>
+    <string name="adopt">Adopt</string>
+    <string name="training">Training</string>
+    <string name="profile">Profile</string>
+
+    <!-- Home Screen -->
+    <string name="welcome">Welcome to Petllo!</string>
+    <string name="logout">Logout</string>
 </resources>

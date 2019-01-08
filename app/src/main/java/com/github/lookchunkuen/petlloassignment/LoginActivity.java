@@ -1,14 +1,12 @@
 package com.github.lookchunkuen.petlloassignment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -19,7 +17,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,9 +26,9 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText editTextUsername, editTextPassword;
-    private Button buttonLogin;
-    private TextView textViewRegister;
+    private Button buttonLogin, buttonGoToReg;
     private static String URL_LOGIN = "https://petllo.000webhostapp.com/login.php";
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +38,15 @@ public class LoginActivity extends AppCompatActivity {
         editTextUsername = findViewById(R.id.editTextUsername);
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonLogin = findViewById((R.id.buttonLogin));
-        textViewRegister = findViewById(R.id.textViewRegister);
+        buttonGoToReg = findViewById(R.id.buttonGoToReg);
+
+        sessionManager = new SessionManager(this);
+    }
+
+    public void GoToRegister(View v){
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void Login(View v){
@@ -73,6 +78,14 @@ public class LoginActivity extends AppCompatActivity {
                                 String message = jsonObject.getString("message");
                                 if (success==1) {
                                     Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG).show();
+
+                                    String name = jsonObject.getString("username");
+                                    String email = jsonObject.getString("email");
+                                    sessionManager.CreateSession(name, email);
+
+                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                    startActivity(intent);
+                                    finish();
                                 }else{
                                     Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG).show();
                                 }

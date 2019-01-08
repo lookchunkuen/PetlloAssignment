@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_home"
+        android:enabled="true"
+        android:title="@string/home"
+        android:icon="@drawable/ic_home_black_24dp" />
+    <item android:id="@+id/action_adoption"
+        android:enabled="true"
+        android:title="@string/adopt"
+        android:icon="@drawable/ic_pets_black_24dp" />
+    <item android:id="@+id/action_training"
+        android:enabled="true"
+        android:title="@string/training"
+        android:icon="@drawable/dog_training" />
+    <item android:id="@+id/action_profile"
+        android:enabled="true"
+        android:title="@string/profile"
+        android:icon="@drawable/ic_person_black_24dp" />
+</menu>

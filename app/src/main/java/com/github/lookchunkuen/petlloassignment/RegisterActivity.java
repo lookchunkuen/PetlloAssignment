@@ -1,6 +1,7 @@
 package com.github.lookchunkuen.petlloassignment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.RegionIterator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,8 +26,8 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText editTextUsername,editTextEmail, editTextPassword, editTextConfirmPassword;
-    private Button buttonRegister;
+    private EditText editTextUsername,editTextEmail, editTextPassword;
+    private Button buttonRegister, buttonGoToLogin;
     private static String URL_REGISTER = "https://petllo.000webhostapp.com/register.php";
 
     @Override
@@ -37,22 +38,38 @@ public class RegisterActivity extends AppCompatActivity {
         editTextUsername = findViewById(R.id.editTextUsername);
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
-        editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
         buttonRegister = findViewById(R.id.buttonRegister);
+        buttonGoToLogin = findViewById(R.id.buttonGoToLogin);
+    }
+
+    public void GoToLogin(View v){
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void Register(View v){
-        Users users = new Users();
+        if(editTextUsername.getText().toString().isEmpty()){
+            editTextUsername.setError("Please enter username");
+        }
+        if(editTextEmail.getText().toString().isEmpty()){
+            editTextEmail.setError("Please enter email");
+        }
+        if(editTextPassword.getText().toString().isEmpty()){
+            editTextPassword.setError("Please enter password");
+        }else{
+            Users users = new Users();
 
-        users.setUsername(editTextUsername.getText().toString());
-        users.setEmail(editTextEmail.getText().toString());
-        users.setPassword(editTextPassword.getText().toString());
+            users.setUsername(editTextUsername.getText().toString());
+            users.setEmail(editTextEmail.getText().toString());
+            users.setPassword(editTextPassword.getText().toString());
 
-        try {
-            makeServiceCall(this, URL_REGISTER, users);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            try {
+                makeServiceCall(this, URL_REGISTER, users);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -77,7 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        Toast.makeText(RegisterActivity.this, "Error" + e.toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(RegisterActivity.this, "Error" + response, Toast.LENGTH_LONG).show();
                     }
                 }
                 },
