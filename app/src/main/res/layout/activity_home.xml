@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login_bg"
     tools:context=".HomeActivity">
 
     <android.support.design.widget.BottomNavigationView
@@ -25,8 +26,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="68dp"
         android:text="@string/welcome"
-        android:textColor="@color/bg_register"
-        android:textSize="30sp"
+        android:textColor="@color/black"
+        android:textSize="36sp"
         android:textStyle="bold" />
 
     <TextView
@@ -36,17 +37,18 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="123dp"
-        android:textSize="24sp" />
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewUsername"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="226dp"
         android:layout_marginBottom="82dp"
+        android:onClick="Logout"
         android:text="@string/logout" />
 
 </RelativeLayout>
