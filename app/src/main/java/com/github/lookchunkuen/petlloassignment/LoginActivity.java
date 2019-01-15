@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText editTextUsername, editTextPassword;
+    private EditText editTextEmail, editTextPassword;
     private Button buttonLogin, buttonGoToReg;
     private static String URL_LOGIN = "https://petllo.000webhostapp.com/login.php";
     SessionManager sessionManager;
@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        editTextUsername = findViewById(R.id.editTextUsername);
+        editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonLogin = findViewById((R.id.buttonLogin));
         buttonGoToReg = findViewById(R.id.buttonGoToReg);
@@ -50,18 +50,18 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void Login(View v){
-        final String username = editTextUsername.getText().toString();
+        final String email = editTextEmail.getText().toString();
         final String password = editTextPassword.getText().toString();
 
         try {
-            makeServiceCall(this, URL_LOGIN, username, password);
+            makeServiceCall(this, URL_LOGIN, email, password);
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
-    public void makeServiceCall(Context context, String url, final String username, final String password){
+    public void makeServiceCall(Context context, String url, final String email, final String password){
         //mPostCommentResponse.requestStarted();
         RequestQueue queue = Volley.newRequestQueue(context);
 
@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
-                    params.put("username", username);
+                    params.put("email", email);
                     params.put("password",password);
                     return params;
                 }

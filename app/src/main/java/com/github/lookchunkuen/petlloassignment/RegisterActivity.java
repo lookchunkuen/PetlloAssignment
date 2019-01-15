@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.RegionIterator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +44,10 @@ public class RegisterActivity extends AppCompatActivity {
         buttonGoToLogin = findViewById(R.id.buttonGoToLogin);
     }
 
+    public static boolean isValidEmail(CharSequence target) {
+        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
+    }
+
     public void GoToLogin(View v){
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
@@ -51,24 +57,26 @@ public class RegisterActivity extends AppCompatActivity {
     public void Register(View v){
         if(editTextUsername.getText().toString().isEmpty()){
             editTextUsername.setError("Please enter username");
-        }
-        if(editTextEmail.getText().toString().isEmpty()){
+        }else if(editTextEmail.getText().toString().isEmpty()){
             editTextEmail.setError("Please enter email");
-        }
-        if(editTextPassword.getText().toString().isEmpty()){
+        }else if(editTextPassword.getText().toString().isEmpty()){
             editTextPassword.setError("Please enter password");
         }else{
-            Users users = new Users();
+            if(isValidEmail(editTextEmail.getText().toString())){
+                Users users = new Users();
 
-            users.setUsername(editTextUsername.getText().toString());
-            users.setEmail(editTextEmail.getText().toString());
-            users.setPassword(editTextPassword.getText().toString());
+                users.setUsername(editTextUsername.getText().toString());
+                users.setEmail(editTextEmail.getText().toString());
+                users.setPassword(editTextPassword.getText().toString());
 
-            try {
-                makeServiceCall(this, URL_REGISTER, users);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                try {
+                    makeServiceCall(this, URL_REGISTER, users);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }else{
+                Toast.makeText(getApplicationContext(), "Invalid Email", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -89,6 +97,9 @@ public class RegisterActivity extends AppCompatActivity {
                         String message = jsonObject.getString("message");
                         if (success==1) {
                             Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(intent);
+                            finish();
                         }else{
                             Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG).show();
                         }
